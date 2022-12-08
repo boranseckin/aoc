@@ -1,0 +1,22 @@
+name: Update Badges
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: J0B10/aoc-badges-action@v3
+        with:
+          userid: 2698056
+          session: ${{ secrets.AOC_SESSION }}
+          
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update badges
+          file_pattern: README.md
