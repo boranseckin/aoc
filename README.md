@@ -10,3 +10,4 @@ Advent of Code
 - [Day 3](https://adventofcode.com/2022/day/3) - [Solution](day3/day3.js)
 - [Day 4](https://adventofcode.com/2022/day/4) - [Solution](day4/day4.js)
 - [Day 5](https://adventofcode.com/2022/day/5) - [Solution](day5/day5.js)
+- [Day 6](https://adventofcode.com/2022/day/6) - [Solution](day6/day6.js)
