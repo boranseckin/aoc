@@ -1,5 +1,4 @@
-# aoc
-Advent of Code
+# Advent of Code
 
 ![](https://img.shields.io/badge/day%20📅-9-blue?style=flat-square)
 ![](https://img.shields.io/badge/stars%20⭐-14-yellow?style=flat-square)
