@@ -11,3 +11,4 @@
 - [Day 5](https://adventofcode.com/2022/day/5) - [Solution](day5/day5.js)
 - [Day 6](https://adventofcode.com/2022/day/6) - [Solution](day6/day6.js)
 - [Day 7](https://adventofcode.com/2022/day/7) - [Solution](day7/day7.js)
+- [Day 8](https://adventofcode.com/2022/day/8) - [Solution](day8/day8.js)
