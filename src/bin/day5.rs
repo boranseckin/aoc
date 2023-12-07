@@ -1,3 +1,7 @@
+use std::thread;
+use std::sync::Arc;
+use std::sync::mpsc;
+
 fn main() {
     let input = include_str!("../../inputs/day5.input");
 
@@ -53,25 +57,48 @@ fn main() {
             });
         }
     }
+    let length = seeds.len();
 
     let maps: Vec<Vec<Vec<usize>>> = section.map(|map| {
         map.lines().skip(1).map(|entry| {
             entry.split_whitespace().flat_map(|n| n.parse()).collect()
         }).collect()
     }).collect();
+    let maps = &(*Box::leak(Box::new(maps)));
 
-    let length = seeds.len();
-    let min_location: usize = seeds.into_iter().enumerate().map(|(i, mut seed)| {
-        if i % 100000 == 0 {
-            println!("{i}/{length} %{}", i/length*100);
-        }
-        for map in &maps {
-            seed = map_range(seed, map);
-        }
-        seed
-    }).min().unwrap();
+    let (tx, rx) = mpsc::channel();
+    let seeds = Arc::new(seeds);
 
-    dbg!(min_location);
+    let worker_count = 16;
+    let chunk_len = ((length as f32 / worker_count as f32).round() as usize).max(1);
+    dbg!(seeds.chunks(chunk_len).count());
+
+    for i in 0..seeds.chunks(chunk_len).count() {
+        let _tx = tx.clone();
+        let _seeds = Arc::clone(&seeds);
+
+        thread::spawn(move || {
+            let seeds = _seeds.chunks(chunk_len).nth(i).unwrap();
+            let min_location: usize = seeds.iter().map(|seed| {
+                let mut seed = *seed;
+                for map in maps {
+                    seed = map_range(seed, map);
+                }
+                seed
+            }).min().unwrap();
+
+            _tx.send(min_location).unwrap();
+        });
+    }
+
+    drop(tx);
+
+    let mut results = Vec::with_capacity(worker_count);
+    for recieved in rx {
+        results.push(recieved);
+    }
+
+    dbg!(results.into_iter().min().unwrap());
 }
 
 fn map_range(num: usize, ranges: &[Vec<usize>]) -> usize {
