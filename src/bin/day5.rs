@@ -103,7 +103,7 @@ fn main() {
 
 fn map_range(num: usize, ranges: &[Vec<usize>]) -> usize {
     for range in ranges {
-        if num >= range[1] && num <= range[1] + range[2] {
+        if num >= range[1] && num < range[1] + range[2] {
             return range[0] + (num - range[1]);
         }
     }
