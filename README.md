@@ -1,2 +1,3 @@
-# aoc2023
-Solutions to Advent of Code 2023
+# aoc2025
+
+Solutions to Advent of Code 2025
